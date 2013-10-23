@@ -15,15 +15,9 @@ lnif() {
     fi
 }
 
-echo "backing up current vim config"
-today=`date +%Y%m%d`
-for i in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc; do [ -e $i ] && [ ! -L $i ] && mv $i $i.$today; done
-for i in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc; do [ -L $i ] && unlink $i ; done
-
 
 echo "setting up symlinks"
 lnif $CURRENT_DIR/vimrc $HOME/.vimrc
-lnif $CURRENT_DIR/ $HOME/.vim
 
 
 if [ ! -e $CURRENT_DIR/vundle ]; then
@@ -44,14 +38,3 @@ echo "compile YouCompleteMe"
 echo "if error,you need to compile it yourself"
 cd $CURRENT_DIR/bundle/YouCompleteMe/
 bash -x install.sh --clang-completer
-
-#vim bk and undo dir
-if [ ! -d ~/bak/vimbk ]
-then
-    mkdir -p ~/bak/vimbk
-fi
-
-if [ ! -d ~/bak/vimundo ]
-then
-    mkdir -p ~/bak/vimundo
-fi
